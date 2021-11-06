@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native';
 
 // View -> UIView
 const App = () => {
@@ -10,6 +10,12 @@ const App = () => {
         title="PING"
         onPress={() => Alert.alert('sent')}
       />
+      <TextInput
+        style = {{height:40}}
+        placeholder = "Enter Distress Description"
+        onChangeText = {Text => setText(Text)}
+        defaultValue = {Text}
+        />
       <StatusBar style="auto" />
     </View>
   );
@@ -23,6 +29,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+const message = () =>{
+  const [text, setText] = useState('');
+  return(
+    <View style = {{padding: 10}}>
+      <TextInput
+        style = {{height:40}}
+        placeholder = "Enter Distress Description"
+        onChangeText = {text => setText(text)}
+        defaultValue = {text}
+        />
+      
+    </View>
+  )
+}
 
 
 
