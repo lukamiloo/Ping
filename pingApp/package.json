@@ -10,8 +10,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "config": "^3.3.6",
     "expo": "~43.0.0",
     "expo-status-bar": "~1.1.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.2",
