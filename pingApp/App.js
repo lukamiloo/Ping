@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect} from 'react';
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
-//import profile from 'pingApp/backend.py';
 import { 
   StyleSheet, 
   Text,
@@ -24,15 +23,20 @@ import { PanGestureHandler } from 'react-native-gesture-handler';
 
 // View -> UIView
 const App = () => {
-  const [input, setInput] = React.useState();
+  const [input, setInput] = React.useState([]);
+  
+  useEffect(() => {
+    fetch('localhost:5000/post', {
+      method: 'POST'
+    }).then(resp => resp.json()).then(input => {
+      setInput(input)
+    })
+  }, []);
+
   console.log("started on device");
   return (
     <>
       <View style={styles.container}>
-          <AppButton
-            title="ping"
-            onPress={() => {Alert.alert("sent!")}}
-          />
           <TextInput
             style = {styles.input}
             placeholder = "Enter Distress Description"
@@ -42,6 +46,11 @@ const App = () => {
             }}
             defaultValue = {input}
           />
+          <AppButton
+            title="ping"
+            onPress={() => {Alert.alert("sent!")}}
+          />
+
         <SafeAreaView></SafeAreaView>
         <StatusBar style="auto" />
       </View>
@@ -49,13 +58,8 @@ const App = () => {
   );
 
 }
-
-//const insertData = () => {
- // fetch()
-//}
-
 const AppButton = ({ onPress, title }) => (
-  <TouchableOpacity onPress={requestPermissions} style={styles.appButtonContainer}>
+  <TouchableOpacity onPress={requestPermissions, onPress} style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>{title}</Text>
   </TouchableOpacity>
 );
@@ -105,16 +109,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#23AFE7',
     borderRadius: 150,
     paddingVertical: 10,
-    paddingHorizontal: 12
+    paddingHorizontal: 12,
+    marginBottom: 120
   },
   appButtonText: {
-    fontSize: 50,
+    fontSize: 40,
     color: 'white',
     alignSelf: "center",
     paddingTop: 95,
   },
   input: {
-    paddingTop: 50,
+    marginBottom: 40,
+    paddingLeft: 20,
     width: 200,
     
   },

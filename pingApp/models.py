@@ -13,8 +13,8 @@ class User(db.Model, UserMixin):
     phone = db.Column(db.String(32), primary_key = True,  unique=True)
     name = db.Column(db.String(32))
     address = db.Column(db.String(64))
-    latitude = db.Column(db.double, unique=True)
-    longitude = db.Column(db.double, unique=True)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
     messages = db.Column(db.String(320))
     
     def __repr__(self):
