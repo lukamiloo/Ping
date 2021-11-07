@@ -13,7 +13,10 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(320), unique=True)
     phone = db.Column(db.String(320), unique=True)
-    location = db.Column(db.String(320), unique=True)
+    latitude = db.Column(db.double, unique=True)
+    longitude = db.Column(db.double, unique=True)
+    degrees = db.Column(db.double,unique=True)
+    
     
 
     def __repr__(self):
