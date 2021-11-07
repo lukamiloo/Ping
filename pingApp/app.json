@@ -17,7 +17,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist":{
+        "UIBackgroundModes": ["location","fetch"],
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "App requires geolocation to improve the quality of the service"
+      }
     },
     "android": {
       "adaptiveIcon": {
