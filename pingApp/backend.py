@@ -9,10 +9,11 @@ def profile(name, phone, address):
 def location(longitude, latitude, phone):
     user = User.query.filter_by(phone = phone).all()
     temp = User(phone = user.phone, longitude = longitude, latitude = latitude)
-    db.add(user)
+    db.add(temp)
     db.commit()
 
 def message(message):
-    user = User(message = message)
-    db.add(user)
+    user = User.query.filter_by(phone = phone).all()
+    temp = User(phone = user.phone, message = message)
+    db.add(temp)
     db.commit()
