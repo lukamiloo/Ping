@@ -10,15 +10,13 @@ db = SQLAlchemy(app)
 
 
 class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(320), unique=True)
-    phone = db.Column(db.String(320), unique=True)
+    phone = db.Column(db.String(32), primary_key = True,  unique=True)
+    name = db.Column(db.String(32))
+    address = db.Column(db.String(64))
     latitude = db.Column(db.double, unique=True)
     longitude = db.Column(db.double, unique=True)
-    degrees = db.Column(db.double,unique=True)
+    messages = db.Column(db.String(320))
     
-    
-
     def __repr__(self):
         return '<User %r>' % self.phone
         
