@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import profile from 'pingApp/backend.py'
+import * as TaskManager from 'expo-task-manager';
+import * as Location from 'expo-location';
+//import profile from 'pingApp/backend.py';
 import { 
   StyleSheet, 
   Text,
@@ -16,6 +18,7 @@ import {
   useCallback, 
   useMemo, 
   useWindowDimensions } from 'react-native';
+
 //import BottomSheet from '@gorhom/bottom-sheet';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 
@@ -47,15 +50,46 @@ const App = () => {
 
 }
 
-const insertData = () => {
-  fetch()
-}
+//const insertData = () => {
+ // fetch()
+//}
 
 const AppButton = ({ onPress, title }) => (
-  <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
+  <TouchableOpacity onPress={requestPermissions} style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>{title}</Text>
   </TouchableOpacity>
 );
+
+const LOCATION_TASK_NAME = 'background-location-task';
+
+const requestPermissions = async () => {
+  const { status } = await Location.requestForegroundPermissionsAsync() && await Location.requestBackgroundPermissionsAsync();
+  console.log('permissions')
+  if (status === 'granted') {
+    await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+      accuracy: Location.Accuracy.Balanced,
+    });
+  }
+};
+
+const PermissionsButton = () => (
+  <TouchableOpacity
+        onPress={requestPermissions}
+        style={{ backgroundColor: 'blue' }}>
+        <Text style={{ fontSize: 20, color: '#fff' }}>Location Permission</Text>
+      </TouchableOpacity>
+);
+
+TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
+  if (error) {
+    // Error occurred - check `error.message` for more details.
+    return;
+  }
+  if (data) {
+    const { locations } = data;
+    // do something with the locations captured in the background
+  }
+});
 
 const styles = StyleSheet.create({
   container: {
