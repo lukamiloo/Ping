@@ -1,23 +1,54 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, TouchableOpacity , SafeAreaView } from 'react-native';
-import { useWindowDimensions } from 'react-native';
-import styled from 'styled-components';
+import profile from 'pingApp/backend.py'
+import { 
+  StyleSheet, 
+  Text,
+  TextInput,
+  OnChangeText,
+  View, 
+  Button, 
+  Alert, 
+  useState,
+  TouchableOpacity, 
+  SafeAreaView, 
+  useRef, 
+  useCallback, 
+  useMemo, 
+  useWindowDimensions } from 'react-native';
+//import BottomSheet from '@gorhom/bottom-sheet';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 
 // View -> UIView
 const App = () => {
+  const [input, setInput] = React.useState();
   console.log("started on device");
-  const { width } = useWindowDimensions();
   return (
-    <View style={styles.container}>
-      <AppButton
-        title="PING"
-        onPress={() => Alert.alert('sent')}
-      />
-      <SafeAreaView></SafeAreaView>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <View style={styles.container}>
+          <AppButton
+            title="ping"
+            onPress={() => {Alert.alert("sent!")}}
+          />
+          <TextInput
+            style = {styles.input}
+            placeholder = "Enter Distress Description"
+            onChangeText = {(input) => setInput(input)}
+            onSubmitEditing={()=> {
+              alert(`Message sent: ${input}`);
+            }}
+            defaultValue = {input}
+          />
+        <SafeAreaView></SafeAreaView>
+        <StatusBar style="auto" />
+      </View>
+    </>
   );
+
+}
+
+const insertData = () => {
+  fetch()
 }
 
 const AppButton = ({ onPress, title }) => (
@@ -34,34 +65,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   appButtonContainer: {
+    width: 280,
+    height:280,
     elevation: 8,
-    backgroundColor: "#009688",
-    borderRadius: 20,
+    backgroundColor: '#23AFE7',
+    borderRadius: 150,
     paddingVertical: 10,
     paddingHorizontal: 12
-
   },
   appButtonText: {
-    fontSize: 18,
-    color: "#fff",
-    fontWeight: "bold",
+    fontSize: 50,
+    color: 'white',
     alignSelf: "center",
-    textTransform: "uppercase"
-  }
+    paddingTop: 95,
+  },
+  input: {
+    paddingTop: 50,
+    width: 200,
+    
+  },
 });
-
-const message = () =>{
-  const [text, setText] = useState('');
-  return(
-    <View style = {{padding: 10}}>
-      <TextInput
-        style = {{height:40}}
-        placeholder = "Enter Distress Description"
-        onChangeText = {text => setText(text)}
-        defaultValue = {text}
-        /> 
-    </View>
-  )
-}
 
 export default App;
