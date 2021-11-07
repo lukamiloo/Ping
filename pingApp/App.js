@@ -64,17 +64,21 @@ const AppButton = ({ onPress, title }) => (
   </TouchableOpacity>
 );
 
-const LOCATION_TASK_NAME = 'background-location-task';
+const LOCATION_TASK_NAME = 'foreground-location';
 
 const requestPermissions = async () => {
-  const { status } = await Location.requestForegroundPermissionsAsync() && await Location.requestBackgroundPermissionsAsync();
+  const { status } = await Location.requestForegroundPermissionsAsync()
   console.log('permissions')
   if (status === 'granted') {
-    await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+    let location = await Location.getCurrentPositionAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Balanced,
     });
+    setLocation(location)
+    console.log(JSON.stringify(location))
+    
   }
 };
+
 
 const PermissionsButton = () => (
   <TouchableOpacity
@@ -85,12 +89,14 @@ const PermissionsButton = () => (
 );
 
 TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
+  const [location, setLocation] = React.useState(null);
   if (error) {
     // Error occurred - check `error.message` for more details.
     return;
   }
   if (data) {
-    const { locations } = data;
+    console.log("received")
+    const { location } = data;
     // do something with the locations captured in the background
   }
 });
