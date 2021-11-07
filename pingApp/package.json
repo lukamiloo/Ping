@@ -10,15 +10,19 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "bluebird": "^3.7.2",
     "config": "^3.3.6",
     "expo": "~43.0.0",
     "expo-status-bar": "~1.1.0",
     "express": "^4.17.1",
+    "mongodb": "^4.1.4",
+    "mongodb-realm": "^1.0.0",
     "mysql": "^2.18.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.2",
-    "react-native-web": "0.17.1"
+    "react-native-web": "0.17.1",
+    "react-native-webview": "^11.14.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
