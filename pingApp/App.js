@@ -1,30 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, safeAreaView} from 'react-native';
-import HTMLView from 'react-native-webview';
-
-const htmlContent = "<p>THIS IS HTML</p>";
+import { StyleSheet, Text, View, Button, Alert, TouchableOpacity , SafeAreaView } from 'react-native';
+import { useWindowDimensions } from 'react-native';
+import styled from 'styled-components';
 
 // View -> UIView
 const App = () => {
   console.log("started on device");
+  const { width } = useWindowDimensions();
   return (
     <View style={styles.container}>
-       <HTMLView value={htmlContent}/>
-      <Button
+      <AppButton
         title="PING"
         onPress={() => Alert.alert('sent')}
       />
-      <TextInput
-        style = {{height:40}}
-        placeholder = "Enter Distress Description"
-        onChangeText = {Text => setText(Text)}
-        defaultValue = {Text}
-        />
+      <SafeAreaView></SafeAreaView>
       <StatusBar style="auto" />
     </View>
   );
 }
+
+const AppButton = ({ onPress, title }) => (
+  <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
+    <Text style={styles.appButtonText}>{title}</Text>
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -36,10 +36,18 @@ const styles = StyleSheet.create({
   appButtonContainer: {
     elevation: 8,
     backgroundColor: "#009688",
-    borderRadius: 10,
+    borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 12
+
   },
+  appButtonText: {
+    fontSize: 18,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase"
+  }
 });
 
 const message = () =>{
@@ -51,8 +59,7 @@ const message = () =>{
         placeholder = "Enter Distress Description"
         onChangeText = {text => setText(text)}
         defaultValue = {text}
-        />
-      
+        /> 
     </View>
   )
 }
